@@ -44,7 +44,7 @@ lon = []
 vibr = []
 speed = []
 
-f = open("55515537.CSV", "r")
+f = open("data/55515537.CSV", "r")
 for line in f:
     variables = line.split(";")
     lat.append(float(variables[1]))
