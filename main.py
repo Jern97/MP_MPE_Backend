@@ -1,6 +1,7 @@
 from gmplot import GoogleMapPlotter
 import webbrowser
 
+
 # We subclass this just to change the map type
 class CustomGoogleMapPlotter(GoogleMapPlotter):
     def __init__(self, center_lat, center_lng, zoom, apikey='',
@@ -8,9 +9,9 @@ class CustomGoogleMapPlotter(GoogleMapPlotter):
         super().__init__(center_lat, center_lng, zoom, apikey)
 
         self.map_type = map_type
-        assert(self.map_type in ['roadmap', 'satellite', 'hybrid', 'terrain'])
+        assert (self.map_type in ['roadmap', 'satellite', 'hybrid', 'terrain'])
 
-    def write_map(self,  f):
+    def write_map(self, f):
         f.write('\t\tvar centerlatlng = new google.maps.LatLng(%f, %f);\n' %
                 (self.center[0], self.center[1]))
         f.write('\t\tvar myOptions = {\n')
@@ -19,7 +20,6 @@ class CustomGoogleMapPlotter(GoogleMapPlotter):
 
         # This is the only line we change
         f.write('\t\t\tmapTypeId: \'{}\'\n'.format(self.map_type))
-
 
         f.write('\t\t};\n')
         f.write(
@@ -34,10 +34,12 @@ def rgb2hex(rgb):
     hexcolor = '#%02x%02x%02x' % tuple(rgb)
     return hexcolor
 
+
 def vibr2color(vibr):
-    value = rgb2hex([vibr/30, 0, 0])
+    value = rgb2hex([vibr / 30, 0, 0])
     print(value)
     return value
+
 
 lat = []
 lon = []
@@ -52,16 +54,14 @@ for line in f:
     speed.append(float(variables[3]))
     vibr.append(float(variables[4]))
 
-
-
 # Place map
 gmap = CustomGoogleMapPlotter(51.155800, 3.196544, 15, map_type='satellite')
 # Polygon
 
 
-for i in range(1,len(lat)):
-    print(lat[i-1:i+1])
-    gmap.plot(lat[i-1:i+1], lon[i-1:i+1], vibr2color(vibr[i]), edge_width=8)
+for i in range(1, len(lat)):
+    print(lat[i - 1:i + 1])
+    gmap.plot(lat[i - 1:i + 1], lon[i - 1:i + 1], vibr2color(vibr[i]), edge_width=8)
 
 # Draw
 gmap.draw("my_map.html")
