@@ -1,3 +1,2 @@
 * linguist-vendored
-*.csv linguist-vendored=false
-*.html linguist-vendored=false
+*.py linguist-vendored=false
