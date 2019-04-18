@@ -1,6 +1,5 @@
 import socket
 import threading
-import os
 from MPE_Parser import parse_file
 
 TCP_IP = '192.168.0.133'

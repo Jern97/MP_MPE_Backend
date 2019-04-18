@@ -1,5 +1,6 @@
 from gmplot import GoogleMapPlotter
 import webbrowser
+import os
 
 # We subclass this just to change the map type
 class CustomGoogleMapPlotter(GoogleMapPlotter):
