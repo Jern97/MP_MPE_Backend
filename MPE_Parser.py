@@ -47,7 +47,7 @@ def parse_file(file_name):
     vibr = []
     speed = []
 
-    f = open("data/" + file_name + ".csv", "r")
+    f = open("data/" + file_name, "r")
     for line in f:
         variables = line.split(";")
         lat.append(float(variables[1]))
@@ -56,7 +56,7 @@ def parse_file(file_name):
         vibr.append(float(variables[4]))
 
     # Place map
-    gmap = CustomGoogleMapPlotter(51.155800, 3.196544, 15, map_type='satellite')
+    gmap = CustomGoogleMapPlotter(lat[0], lon[0], 15, map_type='satellite')
     # Polygon
 
     for i in range(1, len(lat)):
@@ -64,9 +64,10 @@ def parse_file(file_name):
         gmap.plot(lat[i - 1:i + 1], lon[i - 1:i + 1], vibr2color(vibr[i]), edge_width=8)
 
     # Draw
-    gmap.draw("html/" + file_name + ".html")
+    html_file_name = file_name[:-4] + ".html"
+    gmap.draw("html/" + html_file_name)
 
-    webbrowser.open('file://' + os.path.realpath('html/' + file_name + '.html'))
+    webbrowser.open('file://' + os.path.realpath('html/' + html_file_name))
 
 
 #parse_file(sys.argv[1])

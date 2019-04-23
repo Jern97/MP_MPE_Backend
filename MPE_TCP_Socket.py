@@ -1,10 +1,11 @@
 import socket
 import threading
+import hashlib
 from MPE_Parser import parse_file
 
-TCP_IP = '192.168.0.133'
+TCP_IP = '192.168.43.132'
 TCP_PORT = 8080
-BUFFER_SIZE = 128  # Normally 1024, but we want fast response
+BUFFER_SIZE = 1024  # Normally 1024, but we want fast response
 
 
 class ThreadedServer(object):
@@ -46,11 +47,12 @@ class ThreadedServer(object):
 
     @staticmethod
     def receive_file(self, conn, file_name):
-        f = open(file_name + ".csv", "w")
+        f = open("data/" + file_name, "w")
         while 1:
             data = conn.recv(BUFFER_SIZE)
             if data:
                 print(data)
+                hash = hashlib.md5(data)
                 data = data.decode("UTF-8")
                 if (data == 'END'):
                     print("done")
@@ -59,7 +61,8 @@ class ThreadedServer(object):
                     parse_file(file_name)
                     return
                 f.write(data)
+                conn.send(hash.hexdigest().encode('utf-8'))
 
 
 
-ThreadedServer('192.168.0.133', 8080).listen()
+ThreadedServer(TCP_IP, TCP_PORT).listen()
