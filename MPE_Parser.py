@@ -57,7 +57,7 @@ def parse_file(file_name, show=False):
         vibr.append(float(variables[4]))
 
     # Place map
-    gmap = CustomGoogleMapPlotter(51.155800, 3.196544, 15, map_type='satellite')
+    gmap = CustomGoogleMapPlotter(lat[0], lon[0], 15, map_type='satellite')
     # Polygon
 
     for i in range(1, len(lat)):
