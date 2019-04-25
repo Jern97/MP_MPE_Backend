@@ -1,6 +1,8 @@
 from gmplot import GoogleMapPlotter
 import webbrowser
 import os
+import sys
+
 
 # We subclass this just to change the map type
 class CustomGoogleMapPlotter(GoogleMapPlotter):
@@ -37,17 +39,16 @@ def rgb2hex(rgb):
 
 def vibr2color(vibr):
     value = rgb2hex([1 - vibr / 20, 0, 0])
-    print(value)
     return value
 
 
-def parse_file(file_name):
+def parse_file(file_name, show=False):
     lat = []
     lon = []
     vibr = []
     speed = []
 
-    f = open("data/" + file_name + ".csv", "r")
+    f = open("data/" + file_name, "r")
     for line in f:
         variables = line.split(";")
         lat.append(float(variables[1]))
@@ -60,13 +61,14 @@ def parse_file(file_name):
     # Polygon
 
     for i in range(1, len(lat)):
-        print(lat[i - 1:i + 1])
         gmap.plot(lat[i - 1:i + 1], lon[i - 1:i + 1], vibr2color(vibr[i]), edge_width=8)
 
     # Draw
-    gmap.draw("html/" + file_name + ".html")
+    gmap.draw("html/" + file_name.split(".")[0] + ".html")
 
-    webbrowser.open('file://' + os.path.realpath('html/' + file_name + '.html'))
+    if show:
+        webbrowser.open('file://' + os.path.realpath('html/' + file_name.split(".")[0] + '.html'))
 
 
-#parse_file(sys.argv[1])
+if __name__ == "__main__":
+    parse_file(sys.argv[1], True)
