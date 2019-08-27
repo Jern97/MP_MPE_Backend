@@ -1,3 +1,0 @@
-pattern readwrite control/%u/request
-
-pattern readwrite control/%u/response
